@@ -1,24 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import {useState} from "react";
+import Task from "./components/Task";
+import "./App.css"
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    const [tasks, setTasks] = useState([])
+    const [newTaskText, setNewTaskText] = useState("")
+
+    const addTask = () => {
+        if (newTaskText !== "") {
+            setTasks([...tasks,
+                {
+                    id: Math.random(),
+                    text: newTaskText,
+                    completed: false
+                }])
+            setNewTaskText("")
+        }
+    }
+
+    const deleteTask = (id) => {
+        setTasks(tasks.filter((item) => item.id !== id))
+    }
+
+    return (
+        <div className="container">
+            <h1>Task Manager</h1>
+            <div className="tasksBlock">
+                <div className="newTaskInputBlock">
+                    <input
+                        type="text"
+                        value={newTaskText}
+                        onChange={(e) => setNewTaskText(e.target.value)}
+                    />
+                    <button onClick={addTask}>Add task</button>
+                </div>
+                <ul>
+                    {tasks.map((task) => (
+                        <Task key={task.id} taskProp={task} deleteTask={deleteTask}/>
+                    ))}
+                </ul>
+            </div>
+        </div>
   );
 }
 
