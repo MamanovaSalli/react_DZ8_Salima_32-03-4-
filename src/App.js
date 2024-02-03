@@ -1,47 +1,42 @@
-import {useState} from "react";
-import Task from "./components/Task";
-import "./App.css"
+import React from "react";
+import { useState, useMemo } from "react";
+
+function createUser(name, surname) {
+	const user = { name, surname };
+
+	console.log(user);
+
+	return user;
+}
 
 function App() {
-    const [tasks, setTasks] = useState([])
-    const [newTaskText, setNewTaskText] = useState("")
+	const [name, setName] = useState("");
+	const [surname, setSurname] = useState("");
+	const [counter, setCounter] = useState(0);
 
-    const addTask = () => {
-        if (newTaskText !== "") {
-            setTasks([...tasks,
-                {
-                    id: Math.random(),
-                    text: newTaskText,
-                    completed: false
-                }])
-            setNewTaskText("")
-        }
-    }
+	const user = useMemo(() => createUser(name, surname), [name, surname]);
 
-    const deleteTask = (id) => {
-        setTasks(tasks.filter((item) => item.id !== id))
-    }
-
-    return (
-        <div className="container">
-            <h1>Task Manager</h1>
-            <div className="tasksBlock">
-                <div className="newTaskInputBlock">
-                    <input
-                        type="text"
-                        value={newTaskText}
-                        onChange={(e) => setNewTaskText(e.target.value)}
-                    />
-                    <button onClick={addTask}>Add task</button>
-                </div>
-                <ul>
-                    {tasks.map((task) => (
-                        <Task key={task.id} taskProp={task} deleteTask={deleteTask}/>
-                    ))}
-                </ul>
-            </div>
-        </div>
-  );
+	return (
+		<div>
+			<button onClick={() => setCounter(counter + 1)}>
+				На меня нажали {counter} раз.
+			</button>
+			<br />
+			<input
+				type="text"
+				value={name}
+				onChange={(e) => setName(e.target.value)}
+			/>
+			<br />
+			<input
+				type="text"
+				value={surname}
+				onChange={(e) => setSurname(e.target.value)}
+			/>
+			<br />
+			<pre>{JSON.stringify(user, null, 2)}</pre>
+		</div>
+	);
 }
 
 export default App;
