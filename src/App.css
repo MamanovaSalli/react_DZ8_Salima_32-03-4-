@@ -68,3 +68,8 @@ button {
     color: #ececec;
     border-radius: 10px;
 }
+
+.changing {
+    justify-content: center;
+    padding: 20px;
+}

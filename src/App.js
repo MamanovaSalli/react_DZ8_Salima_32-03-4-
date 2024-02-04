@@ -1,42 +1,17 @@
-import React from "react";
-import { useState, useMemo } from "react";
+import React, {useState} from "react";
 
-function createUser(name, surname) {
-	const user = { name, surname };
-
-	console.log(user);
-
-	return user;
+const Color = () => {
+    const [backgroundColor, setBackgroundColor] = useState('#ffffff')
+    const changColor = () => {
+        const randomColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+        setBackgroundColor(randomColor)
+}
+return(
+    <div className="canging" style={{backgroundColor, minHeight: '100vh', transition: 'background-color 0.4s'}}>
+        <h1>Change background color</h1>
+        <button onClick={changColor}>Change here</button>
+    </div>
+)
 }
 
-function App() {
-	const [name, setName] = useState("");
-	const [surname, setSurname] = useState("");
-	const [counter, setCounter] = useState(0);
-
-	const user = useMemo(() => createUser(name, surname), [name, surname]);
-
-	return (
-		<div>
-			<button onClick={() => setCounter(counter + 1)}>
-				На меня нажали {counter} раз.
-			</button>
-			<br />
-			<input
-				type="text"
-				value={name}
-				onChange={(e) => setName(e.target.value)}
-			/>
-			<br />
-			<input
-				type="text"
-				value={surname}
-				onChange={(e) => setSurname(e.target.value)}
-			/>
-			<br />
-			<pre>{JSON.stringify(user, null, 2)}</pre>
-		</div>
-	);
-}
-
-export default App;
+export default Color;
